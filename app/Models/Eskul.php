@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Eskul extends Model
 {
-    protected $fillable = ['nama_eskul', 'nama_pembina', 'foto', 'deskripsi'];
+    protected $fillable = ['nama_eskul', 'nama_pembina', 'kontak_pembina', 'alamat', 'foto', 'deskripsi'];
 
     public function jadwal()
     {

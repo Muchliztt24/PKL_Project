@@ -14,7 +14,7 @@ class JadwalController extends Controller
     public function index()
     {
         $jadwal = Jadwal::all();
-        return view('jadwal.index', compact('jadwal'));
+        return view('admin.jadwal.index', compact('jadwal'));
     }
 
     /**
@@ -23,7 +23,7 @@ class JadwalController extends Controller
     public function create()
     {
         $eskuls = Eskul::all();
-        return view('jadwal.create', compact('eskuls'));
+        return view('admin.jadwal.create', compact('eskuls'));
     }
 
     /**
@@ -38,7 +38,7 @@ class JadwalController extends Controller
             'jam_selesai' => 'required|date_format:H:i|after:jam_mulai',
         ]);
         Jadwal::create($request->all());
-        return redirect()->route('jadwal.index');
+        return redirect()->route('admin.jadwal.index');
     }
 
     /**
@@ -46,7 +46,7 @@ class JadwalController extends Controller
      */
     public function show(Jadwal $jadwal)
     {
-        return view('jadwal.show', compact('jadwal'));
+        return view('admin.jadwal.show', compact('jadwal'));
     }
 
     /**
@@ -55,7 +55,7 @@ class JadwalController extends Controller
     public function edit(Jadwal $jadwal)
     {
         $eskuls = Eskul::all();
-        return view('jadwal.edit', compact('jadwal', 'eskuls'));
+        return view('admin.jadwal.edit', compact('jadwal', 'eskuls'));
     }
 
     /**
@@ -64,7 +64,7 @@ class JadwalController extends Controller
     public function update(Request $request, Jadwal $jadwal)
     {
         $jadwal->update($request->all());
-        return redirect()->route('jadwal.index');
+        return redirect()->route('admin.jadwal.index');
     }
 
     /**
@@ -73,6 +73,6 @@ class JadwalController extends Controller
     public function destroy(Jadwal $jadwal)
     {
         $jadwal->delete();
-        return redirect()->route('jadwal.index');
+        return redirect()->route('admin.jadwal.index');
     }
 }

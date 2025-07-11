@@ -14,8 +14,8 @@ return new class extends Migration {
         Schema::create('penerimaans', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('daftar_id');
+            $table->string('persetujuan');
             $table->text('catatan')->nullable();
-
             $table->foreign('daftar_id')->references('id')->on('daftar__eskuls')->onDelete('cascade');
             $table->timestamps();
         });

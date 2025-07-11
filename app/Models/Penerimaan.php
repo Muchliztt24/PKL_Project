@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Penerimaan extends Model
 {
-    protected $fillable = ['daftar_id', 'catatan'];
+    protected $fillable = ['daftar_id','persetujuan', 'catatan'];
 
     public function daftarEskul()
     {

@@ -14,6 +14,8 @@ return new class extends Migration {
             $table->BigIncrements('id');
             $table->string('nama_eskul')->unique();
             $table->string('nama_pembina')->nullable();
+            $table->string('kontak_pembina')->nullable();
+            $table->string('alamat')->nullable();
             $table->string('foto')->nullable();
             $table->string('deskripsi')->nullable();
             $table->timestamps();

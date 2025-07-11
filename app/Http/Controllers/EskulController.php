@@ -14,7 +14,7 @@ class EskulController extends Controller
     public function index()
     {
         $eskuls = Eskul::all();
-        return view('eskul.index', compact('eskuls'));
+        return view('admin.eskul.index', compact('eskuls'));
     }
 
     /**
@@ -22,7 +22,7 @@ class EskulController extends Controller
      */
     public function create()
     {
-        return view('eskul.create');
+        return view('admin.eskul.create');
     }
 
     /**
@@ -33,6 +33,8 @@ class EskulController extends Controller
         $request->validate([
             'nama_eskul' => 'required|string|max:255',
             'nama_pembina' => 'required|string|max:255',
+            'kontak_pembina' => 'nullable|string|max:255',
+            'alamat' => 'nullable|string|max:255',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'deskripsi' => 'nullable|string',
         ]);
@@ -45,11 +47,13 @@ class EskulController extends Controller
         $eskul = new Eskul();
         $eskul->nama_eskul = $request->nama_eskul;
         $eskul->nama_pembina = $request->nama_pembina;
+        $eskul->kontak_pembina = $request->kontak_pembina; 
+        $eskul->alamat = $request->alamat;
         $eskul->deskripsi = $request->deskripsi;
         $eskul->foto = $FotoPath;
         $eskul->save();
 
-        return redirect()->route('eskul.index')->with('success', 'Eskul created successfully.');
+        return redirect()->route('admin.eskul.index')->with('success', 'Eskul created successfully.');
     }
 
     /**
@@ -57,7 +61,7 @@ class EskulController extends Controller
      */
     public function show(Eskul $eskul)
     {
-        return view('eskul.show', compact('eskul'));
+        return view('admin.eskul.show', compact('eskul'));
     }
 
     /**
@@ -65,7 +69,7 @@ class EskulController extends Controller
      */
     public function edit(Eskul $eskul)
     {
-        return view('eskul.edit', compact('eskul'));
+        return view('admin.eskul.edit', compact('eskul'));
     }
 
     /**
@@ -76,6 +80,8 @@ class EskulController extends Controller
         $request->validate([
             'nama_eskul' => 'required|string|max:255',
             'nama_pembina' => 'required|string|max:255',
+            'kontak_pembina' => 'nullable|string|max:255',
+            'alamat' => 'nullable|string|max:255',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'deskripsi' => 'nullable|string',
         ]);
@@ -90,11 +96,13 @@ class EskulController extends Controller
 
         $eskul->nama_eskul = $request->nama_eskul;
         $eskul->nama_pembina = $request->nama_pembina;
+        $eskul->kontak_pembina = $request->kontak_pembina;
+        $eskul->alamat = $request->alamat;
         $eskul->deskripsi = $request->deskripsi;
         $eskul->foto = $FotoPath;
         $eskul->save();
 
-        return redirect()->route('eskul.index')->with('success', 'Eskul updated successfully.');
+        return redirect()->route('admin.eskul.index')->with('success', 'Eskul updated successfully.');
     }
 
     /**
@@ -103,6 +111,6 @@ class EskulController extends Controller
     public function destroy(Eskul $eskul)
     {
         $eskul->delete();
-        return redirect()->route('eskul.index')->with('success', 'Eskul deleted successfully.');
+        return redirect()->route('admin.eskul.index')->with('success', 'Eskul deleted successfully.');
     }
 }

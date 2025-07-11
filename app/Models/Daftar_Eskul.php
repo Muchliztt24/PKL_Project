@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Daftar_Eskul extends Model
 {
-    protected $table = 'eskuls';
-    protected $fillable = ['user_id', 'kelas', 'eskul_id', 'no_telp', 'alasan'];
+    protected $table = 'daftar__eskuls';
+    protected $fillable = ['user_id', 'kelas', 'eskul_id', 'tahun_ajaran', 'no_telp', 'alasan'];
 
     public function user()
     {

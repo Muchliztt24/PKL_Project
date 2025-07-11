@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('user_id');
             $table->string('kelas');
             $table->unsignedBigInteger('eskul_id');
+            $table->string('tahun_ajaran');
             $table->string('no_telp');
             $table->text('alasan');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Daftar_Eskul;
 use App\Models\Eskul;
-Use App\Models\User;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DaftarEskulController extends Controller
@@ -12,10 +12,45 @@ class DaftarEskulController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $daftarEskul = Daftar_Eskul::all();
-        return view('daftar_eskul.index', compact('daftarEskul'));
+        // Ambil atau set session filter tahun
+        if ($request->filled('filter_tahun')) {
+            session(['filter_tahun' => $request->filter_tahun]);
+        }
+
+        $tahunFilter = session('filter_tahun'); // ini global filter dari dropdown sidebar
+
+        $eskul = Eskul::all();
+
+        $tahunAjaran = Daftar_Eskul::select('tahun_ajaran')->distinct()->pluck('tahun_ajaran');
+        $kelasList = Daftar_Eskul::select('kelas')->distinct()->pluck('kelas');
+
+        $query = Daftar_Eskul::with(['user', 'eskul']);
+
+        // ======= FILTER SESI =======
+        if ($tahunFilter) {
+            $query->where('tahun_ajaran', $tahunFilter);
+        }
+
+        // ======= FILTER FORM DI HALAMAN =======
+        if ($request->filled('tahun_ajaran')) {
+            $query->where('tahun_ajaran', $request->tahun_ajaran);
+        }
+
+        if ($request->filled('ekstrakurikuler')) {
+            $query->whereHas('eskul', function ($q) use ($request) {
+                $q->where('nama_eskul', $request->ekstrakurikuler);
+            });
+        }
+
+        if ($request->filled('kelas')) {
+            $query->where('kelas', $request->kelas);
+        }
+
+        $daftar = $query->paginate(10)->appends($request->all());
+
+        return view('admin.daftar_eskul.index', compact('daftar', 'eskul', 'tahunAjaran', 'kelasList', 'tahunFilter'));
     }
 
     /**
@@ -26,7 +61,7 @@ class DaftarEskulController extends Controller
         $daftarEskul = Daftar_Eskul::all();
         $eskul = Eskul::all();
         $user = User::all();
-        return view('daftar_eskul.create', compact('eskul', 'user'));
+        return view('admin.daftar_eskul.create', compact('eskul', 'user'));
     }
 
     /**
@@ -35,15 +70,19 @@ class DaftarEskulController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'user_id' => 'required|exists:users,id',
             'kelas' => 'required|string|max:50',
             'eskul_id' => 'required|exists:eskuls,id',
+            'tahun_ajaran' => 'required|string|max:10',
             'no_telp' => 'nullable|string|max:15',
             'alasan' => 'nullable|string|max:255',
         ]);
 
-        Daftar_Eskul::create($request->all());
-        return redirect()->route('daftar_eskul.index');
+        $data = $request->only(['kelas', 'eskul_id', 'tahun_ajaran', 'no_telp', 'alasan']);
+        $data['user_id'] = auth()->id();
+
+        Daftar_Eskul::create($data);
+
+        return redirect()->route('admin.daftar_eskul.index')->with('success', 'Pendaftaran berhasil!');
     }
 
     /**
@@ -51,10 +90,10 @@ class DaftarEskulController extends Controller
      */
     public function show(Daftar_Eskul $daftar_Eskul)
     {
-        $daftarEskul = Daftar_Eskul::all();
-        $eskul = Eskul::all();
+        $daftarEskul = Daftar_Eskul::with(['user', 'eskul'])->find($daftar_Eskul->id);
         $user = User::all();
-        return view('daftar_eskul.create', compact('daftarEskul', 'eskul', 'user'));
+        $eskul = Eskul::all();
+        return view('admin.daftar_eskul.create', compact('daftar_Eskul', 'eskul', 'user'));
     }
 
     /**
@@ -62,7 +101,13 @@ class DaftarEskulController extends Controller
      */
     public function edit(Daftar_Eskul $daftar_Eskul)
     {
-        return view('daftar_eskul.edit', compact('daftar_Eskul'));
+        $user = User::all();
+        $eskul = Eskul::all();
+        return view('admin.daftar_eskul.edit', [
+            'daftar_Eskul' => $daftar_Eskul,
+            'user' => $user,
+            'eskul' => $eskul,
+        ]);
     }
 
     /**
@@ -74,12 +119,13 @@ class DaftarEskulController extends Controller
             'user_id' => 'required|exists:users,id',
             'kelas' => 'required|string|max:50',
             'eskul_id' => 'required|exists:eskuls,id',
+            'tahun_ajaran' => 'required|string|max:10',
             'no_telp' => 'nullable|string|max:15',
             'alasan' => 'nullable|string|max:255',
         ]);
 
         $daftar_Eskul->update($request->all());
-        return redirect()->route('daftar_eskul.index');
+        return redirect()->route('admin.daftar_eskul.index');
     }
 
     /**
@@ -88,6 +134,6 @@ class DaftarEskulController extends Controller
     public function destroy(Daftar_Eskul $daftar_Eskul)
     {
         $daftar_Eskul->delete();
-        return redirect()->route('daftar_eskul.index')->with('success', 'Data berhasil dihapus');
+        return redirect()->route('admin.daftar_eskul.index')->with('success', 'Data berhasil dihapus');
     }
 }
