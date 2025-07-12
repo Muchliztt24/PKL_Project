@@ -1,7 +1,56 @@
 @extends('layouts.user')
 
 @section('content')
-<div class="container">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <h1 class="text-center mb-4 mt-3">Login</h1>
+                    <form method="POST" action="{{ route('login') }}">
+                        @csrf
+
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <h5 class="mb-2 text-left">Email</h5>
+                                <input id="email" type="email" class="form-control bg-light border-0 @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus style="padding: 30px 20px;">
+                            </div>
+                        </div>
+                         @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                         @enderror
+
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <h5 class="mb-2 text-left">Password</h5>
+                                <input type="password" placeholder="Your Password" class="form-control bg-light border-0  @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" style="padding: 30px 20px;">
+                            </div>
+                        </div>
+
+                         @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+
+                        <div class="mb-3 form-check col-sm-6">
+                            <input type="checkbox" class="form-check-input" id="remember" name="remember">
+                            <label class="form-check-label" for="remember">Remember Me</label>
+                        </div>
+
+                        <div class="col-sm-12 ">
+                            <button class="btn btn-primary btn-block rounded-pill mb-4 mt-3" type="submit"
+                                style="height: 60px;">Login</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+{{-- <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -69,5 +118,4 @@
             </div>
         </div>
     </div>
-</div>
-@endsection
+</div> --}}

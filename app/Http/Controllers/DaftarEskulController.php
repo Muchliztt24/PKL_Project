@@ -14,7 +14,7 @@ class DaftarEskulController extends Controller
      */
     public function index(Request $request)
     {
-        // Ambil atau set session filter tahun
+        
         if ($request->filled('filter_tahun')) {
             session(['filter_tahun' => $request->filter_tahun]);
         }
@@ -28,12 +28,12 @@ class DaftarEskulController extends Controller
 
         $query = Daftar_Eskul::with(['user', 'eskul']);
 
-        // ======= FILTER SESI =======
+        
         if ($tahunFilter) {
             $query->where('tahun_ajaran', $tahunFilter);
         }
 
-        // ======= FILTER FORM DI HALAMAN =======
+        
         if ($request->filled('tahun_ajaran')) {
             $query->where('tahun_ajaran', $request->tahun_ajaran);
         }
@@ -82,7 +82,7 @@ class DaftarEskulController extends Controller
 
         Daftar_Eskul::create($data);
 
-        return redirect()->route('admin.daftar_eskul.index')->with('success', 'Pendaftaran berhasil!');
+        return redirect()->route('home')->with('success', 'Pendaftaran berhasil! Silahkan tunggu konfirmasi dari admin.');
     }
 
     /**

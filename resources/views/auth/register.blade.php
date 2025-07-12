@@ -2,6 +2,79 @@
 
 @section('content')
 <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <h1 class="text-center mb-4 mt-3">Register</h1>
+                    <form method="POST" action="{{ route('register') }}">
+                        @csrf
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <h5 class="mb-2 text-left">Name</h5>
+                                <input id="name" type="text" class="form-control bg-light border-0 @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus style="padding: 30px 20px;">
+                                @error('name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <h5 class="mb-2 text-left">Email</h5>
+                                <input id="email" type="email" class="form-control bg-light border-0 @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus style="padding: 30px 20px;">
+                                @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                         @enderror
+                            </div>
+                        </div>
+                         
+                         <div class="col-sm-12">
+                            <div class="form-group">
+                                <h5 class="mb-2 text-left">Password</h5>
+                                <input id="password" type="password" class="form-control bg-light border-0 @error('password') is-invalid @enderror" name="password" required autocomplete="new-password" style="padding: 30px 20px;">
+                                 @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <h5 class="mb-2 text-left">Password Confirm</h5>
+                                <input id="password_confirmation" type="password" class="form-control bg-light border-0 @error('password_confirmation') is-invalid @enderror" name="password_confirmation" required autocomplete="new-password" style="padding: 30px 20px;">
+                                @error('password_confirmation')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-sm-12 ">
+                            <button class="btn btn-primary btn-block rounded-pill mb-4 mt-3" type="submit"
+                                style="height: 60px;">Register</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+{{-- <div class="container">
+    <div class="row justify-content-center">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+{{-- <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -73,5 +146,4 @@
             </div>
         </div>
     </div>
-</div>
-@endsection
+</div> --}}

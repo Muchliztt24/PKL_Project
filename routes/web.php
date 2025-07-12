@@ -7,15 +7,13 @@ use App\Http\Controllers\PenerimaanController;
 use App\Http\Controllers\DaftarEskulController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Middleware\IsAdminMiddleware;
+use App\Http\Controllers\FormController;
 use Illuminate\Support\Facades\Auth;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [FormController::class, 'index'])->name('home');
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::group(
     [
@@ -25,6 +23,7 @@ Route::group(
     ],
     function () {
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
         Route::resource('eskul', EskulController::class);
         Route::resource('jadwal', JadwalController::class);
         Route::resource('daftar_eskul', DaftarEskulController::class)->parameters([
@@ -41,3 +40,14 @@ Route::group(
         Route::resource('penerimaan', PenerimaanController::class);
     },
 );
+
+Route::middleware(['auth'])->group(function () {
+    // Route untuk pendaftaran ekstrakurikuler
+    Route::post('/daftar-eskul', [DaftarEskulController::class, 'store'])->name('daftar.eskul.store');
+    Route::get('/eskul/{id}/detail', [FormController::class, 'show'])->name('eskul.detail');
+    // Kamu bisa tambahkan route lainnya di sini
+    Route::prefix('user')->name('user.')->group(function () {
+        
+    });
+});
+

@@ -8,14 +8,16 @@
         </button>
         <div class="collapse navbar-collapse justify-content-between px-lg-3" id="navbarCollapse">
             <div class="navbar-nav mx-auto py-0">
-                <a href="index.html" class="nav-item nav-link active">Halaman Beranda</a>
-                <a href="about.html" class="nav-item nav-link">Jadwal Latihan</a>
+                <a href="{{ route('home') }}" class="nav-item nav-link active">Halaman Beranda</a>
+                @auth
+                <a href="{{ route('home') }}#jadwal" class="nav-item nav-link">Jadwal Latihan</a>
                 <div class="nav-item dropdown">
                     <div class="dropdown-menu m-0">
                     </div>
                 </div>
             </div>
-            <a href="" class="btn btn-primary py-2 px-4 d-none d-lg-block">Daftar Ekstrakurikuler</a>
+            <a href="{{ route('home') }}#form" class="btn btn-primary py-2 px-4 d-none d-lg-block">Daftar Ekstrakurikuler</a>
+            @endauth
         </div>
     </nav>
 </div>

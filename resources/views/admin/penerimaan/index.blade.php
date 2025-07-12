@@ -5,7 +5,7 @@
             <h1 class="text-2xl font-bold">Persetujuan</h1>
 
             <div class="relative w-full max-w-6xl mx-auto overflow-x-auto bg-white shadow-xl rounded-2xl p-6">
-                <h3 class="text-lg font-semibold mb-4">Table Persetujuan</h3>
+                <h3 class="text-lg font-semibold mb-4">Menunggu Persetujuan</h3>
 
                 <!-- Tombol tambah -->
                 <!-- Tabel MENUNGGU -->
@@ -19,7 +19,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($menunggu as $item)
+                        @forelse ($menunggu as $item)
                             <tr>
                                 <td class="px-6 py-3 text-left">{{ $item->user->name }}</td>
                                 <td class="px-6 py-3 text-left">{{ $item->eskul->nama_eskul }}</td>
@@ -38,7 +38,11 @@
                                     </form>
                                 </td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <tr>
+                                <td colspan="4" class="text-center text-slate-400 py-3">Tidak ada data yang tersedia</td>
+                            </tr>   
+                        @endforelse
                     </tbody>
                 </table>
 

@@ -13,7 +13,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //  
+        //
     }
 
     /**
@@ -22,7 +22,14 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         View::composer('layouts.adminassets.sidebar', function ($view) {
-            $tahunList = Daftar_Eskul::select('tahun_ajaran')->distinct()->pluck('tahun_ajaran');
+            $tahunList = [];
+
+            $start = 2020;
+            $end = 2030;
+
+            for ($i = $start; $i < $end; $i++) {
+                $tahunList[] = "$i/" . ($i + 1);
+            }
             $view->with('tahunList', $tahunList);
         });
     }

@@ -8,13 +8,16 @@
                 <p class="m-0">SMKN 1 adalah Sekolah Menengah Kejuruan yang berfokus pada pengembangan keahlian siswa di bidang teknologi, bisnis, dan industri kreatif. Dengan fasilitas lengkap dan tenaga pengajar profesional, SMKN 1 berkomitmen mencetak lulusan yang siap kerja, unggul dalam kompetensi, dan berdaya saing global.</p>
             </div>
             <div class="col-md-4 mb-5 text-end">
-                <div class="mb-3">
+                @guest
+                  <div class="mb-3">
                     <a href="{{ route('register') }}"
                        class="btn btn-primary d-flex justify-content-center align-items-center rounded-pill"
                        style="height: 50px; width: 100%;">
                        Register
                     </a>                             
-                </div>
+                </div>  
+                @endguest
+                @auth
                 <div>
                     <form action="{{ route('logout') }}" method="POST" class="d-inline">
                         @csrf
@@ -24,6 +27,7 @@
                         </button>
                     </form>                                                
                 </div>
+                @endauth
             </div>            
         </div>
         <div class="row">
@@ -36,11 +40,11 @@
             <div class="col-md-4 mb-5">
                 <h3 class="text-white mb-4">Ekstrakurikuler kita</h3>
                 <div class="d-flex flex-column justify-content-start">
-                    {{-- @forelse ($eskul as $item)
+                    @forelse ($eskul as $item)
                         <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>{{ $item->nama_eskul }}</a>
                     @empty
                         <p class="text-white-50">Ekstrakurikuler tidak ada</p>
-                    @endforelse --}}
+                    @endforelse
                 </div>
             </div>
             </div>
