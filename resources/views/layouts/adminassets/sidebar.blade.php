@@ -12,7 +12,7 @@
             <img src="{{ asset('assets/img/logo-ct.png') }}"
                 class="hidden h-full max-w-full transition-all duration-200 dark:inline ease-nav-brand max-h-8"
                 alt="main_logo" />
-            <span class="ml-1 font-semibold transition-all duration-200 ease-nav-brand">Argon Dashboard 2</span>
+            <span class="ml-1 font-semibold transition-all duration-200 ease-nav-brand">Halaman Admin</span>
         </a>
     </div>
 
@@ -85,60 +85,53 @@
                 </a>
             </li>
 
-            <li class="mt-0.5 w-full">
-                <form action="{{ route('admin.filter.tahun') }}" method="GET">
-                    @csrf
+            <li class="mt-0.5 w-full relative group">
+                <div class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand mx-2 flex items-center whitespace-nowrap px-4 transition-colors cursor-pointer select-none"
+                    onclick="document.getElementById('dropdown-tahun').classList.toggle('hidden')">
                     <div
-                        class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors">
-                        <i class="relative top-0 text-sm leading-normal text-orange-500 ni ni-calendar-grid-58"></i>
-                        <label for="tahun_ajaran" class="text-dark text-sm">Tahun Ajaran</label>
-                        <select name="tahun_ajaran" id="tahun_ajaran" class="form-control mt-1"
-                            onchange="this.form.submit()">
-                            <option value="">-- Semua Tahun --</option>
+                        class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center text-orange-500 stroke-0 text-center xl:p-2.5">
+                        <i class="relative top-0 text-sm leading-normal ni ni-calendar-grid-58"></i>
+                    </div>
+                    <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">
+                        Tahun Ajaran
+                    </span>
+                    <svg class="ml-auto w-4 h-4 fill-current text-slate-700 dark:text-white transition-transform group-hover:rotate-180"
+                        viewBox="0 0 20 20">
+                        <path d="M5.516 7.548l4.488 4.489 4.488-4.49L16 9.045l-6 6-6-6z" />
+                    </svg>
+                </div>
+
+                <ul id="dropdown-tahun"
+                    class="hidden absolute z-50 mt-2 ml-14 w-44 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 rounded-lg shadow-lg">
+                    <li>
+                        <form action="{{ route('admin.filter.tahun') }}" method="GET" class="w-full">
+                            @csrf
+                            <button type="submit" name="tahun_ajaran" value=""
+                                class="block w-full text-left px-4 py-2 text-sm text-slate-700 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-700 {{ session('filter_tahun') == '' ? 'font-bold' : '' }}">
+                                -- Semua Tahun --
+                            </button>
                             @foreach ($tahunList as $tahun)
-                                <option value="{{ $tahun }}"
-                                    {{ session('filter_tahun') == $tahun ? 'selected' : '' }}>
+                                <button type="submit" name="tahun_ajaran" value="{{ $tahun }}"
+                                    class="block w-full text-left px-4 py-2 text-sm text-slate-700 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-700 {{ session('filter_tahun') == $tahun ? 'font-bold' : '' }}">
                                     {{ $tahun }}
-                                </option>
+                                </button>
                             @endforeach
-
-                        </select>
-                    </div>
-                </form>
-            </li>
-
-            <li class="mt-0.5 w-full">
-                <a class=" dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
-                    href="{{ route('login') }}">
-                    <div
-                        class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
-                        <i class="relative top-0 text-sm leading-normal text-orange-500 ni ni-single-copy-04"></i>
-                    </div>
-                    <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Sign In</span>
-                </a>
-            </li>
-
-            <li class="mt-0.5 w-full">
-                <a class=" dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
-                    href="{{ route('register') }}">
-                    <div
-                        class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
-                        <i class="relative top-0 text-sm leading-normal text-cyan-500 ni ni-collection"></i>
-                    </div>
-                    <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Sign Up</span>
-                </a>
+                        </form>
+                    </li>
+                </ul>
             </li>
         </ul>
     </div>
 
-    <div class="mx-4">
-        <!-- load phantom colors for card after: -->
-        <p
-            class="invisible hidden text-gray-800 text-red-500 text-red-600 text-blue-500 bg-gray-500/30 bg-cyan-500/30 bg-emerald-500/30 bg-orange-500/30 bg-red-500/30 after:bg-gradient-to-tl after:from-zinc-800 after:to-zinc-700 dark:bg-gradient-to-tl dark:from-slate-750 dark:to-gray-850 after:from-blue-700 after:to-cyan-500 after:from-orange-500 after:to-yellow-500 after:from-green-600 after:to-lime-400 after:from-red-600 after:to-orange-600 after:from-slate-600 after:to-slate-300 text-emerald-500 text-cyan-500 text-slate-400">
-        </p>
+    <div class="px-4 py-3">
         <form action="{{ route('logout') }}" method="POST">
             @csrf
-            <button class="btn btn-danger" type="submit">Logout</button>
+            <button 
+                type="submit"
+                class="w-full py-2 px-4 bg-danger text-white rounded-full font-semibold hover:bg-red-200 hover:text-red-700 transition">
+                Logout
+            </button>
         </form>
     </div>
+</div>
 </aside>

@@ -26,8 +26,14 @@ class PenerimaanController extends Controller
             });
         }
 
-        $disetujui = (clone $query)->where('persetujuan', 'disetujui')->latest()->get();
-        $ditolak = (clone $query)->where('persetujuan', 'ditolak')->latest()->get();
+        $disetujui = (clone $query)->where('persetujuan', 'disetujui')
+        ->latest()
+        ->paginate(8)
+        ->appends($request->all());
+        $ditolak = (clone $query)->where('persetujuan', 'ditolak')
+        ->latest()
+        ->paginate(8)
+        ->appends($request->all());
 
         $menunggu = Daftar_Eskul::with(['user', 'eskul'])
             ->whereNotIn('id', Penerimaan::pluck('daftar_id'))
@@ -35,7 +41,8 @@ class PenerimaanController extends Controller
                 $query->where('tahun_ajaran', $tahunAjaran);
             })
             ->latest()
-            ->get();
+            ->paginate(10)
+            ->appends($request->all());
 
         $semuaTahun = Daftar_Eskul::select('tahun_ajaran')->distinct()->pluck('tahun_ajaran');
 

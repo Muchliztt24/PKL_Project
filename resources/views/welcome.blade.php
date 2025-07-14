@@ -108,7 +108,7 @@
                         </div>
                         <div class="w-100 bg-white text-center p-4">
                             <a href="{{ route('eskul.detail', $item->id) }}" class="btn btn-info rounded-pill">
-                             Course Detail
+                             Detail Ekstrakurikuler
                             </a>
                         </div>
                     </div>

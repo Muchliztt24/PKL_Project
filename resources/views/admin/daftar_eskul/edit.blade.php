@@ -1,62 +1,87 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="container mx-auto px-4 py-6">
-    <h2 class="text-2xl font-bold mb-4">Edit Pendaftaran Ekstrakurikuler</h2>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow rounded-4">
+                <div class="card-header bg-info text-white text-center fw-bold rounded-top-4">
+                    Edit Pendaftaran Ekstrakurikuler
+                </div>
+                <div class="card-body">
+                    @if ($errors->any())
+                        <div class="alert alert-danger rounded-3">
+                            <ul class="mb-0">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
 
-    <form action="{{ route('admin.daftar_eskul.update', $daftar_Eskul) }}" method="POST">
-        @csrf
-        @method('PUT')
-        <div>
-            <label for="user_id" class="block font-medium">Nama Siswa</label>
-            <select name="user_id" id="user_id" class="w-full border rounded px-3 py-2">
-                @foreach($user as $u)
-                    <option value="{{ $u->id }}" {{ $daftar_Eskul->user_id == $u->id ? 'selected' : '' }}>
-                        {{ $u->name }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
+                    <form action="{{ route('admin.daftar_eskul.update', $daftar_Eskul) }}" method="POST">
+                        @csrf
+                        @method('PUT')
 
-        <div>
-            <label for="kelas" class="block font-medium">Kelas</label>
-            <input type="text" name="kelas" id="kelas" class="w-full border rounded px-3 py-2" value="{{ old('kelas', $daftar_Eskul->kelas) }}">
-        </div>
+                        <div class="mb-3">
+                            <label for="user_id" class="form-label">Nama Siswa</label>
+                            <select name="user_id" id="user_id" class="form-control rounded-pill" required>
+                                @foreach($user as $u)
+                                    <option value="{{ $u->id }}" {{ $daftar_Eskul->user_id == $u->id ? 'selected' : '' }}>
+                                        {{ $u->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
 
-        <div>
-            <label for="eskul_id" class="block font-medium">Eskul</label>
-            <select name="eskul_id" id="eskul_id" class="w-full border rounded px-3 py-2">
-                @foreach($eskul as $e)
-                    <option value="{{ $e->id }}" {{ $daftar_Eskul->eskul_id == $e->id ? 'selected' : '' }}>
-                        {{ $e->nama_eskul }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
-        <div>
-            <label for="tahun_ajaran" class="block font-medium">Tahun Ajaran</label>
-            <select name="tahun_ajaran" id="tahun_ajaran" class="w-full border rounded px-3 py-2">
-                <option value="2020/2021" {{ $daftar_Eskul->tahun_ajaran == '2020/2021' ? 'selected' : '' }}>2020/2021</option>
-                <option value="2021/2022" {{ $daftar_Eskul->tahun_ajaran == '2021/2022' ? 'selected' : '' }}>2021/2022</option>
-                <option value="2022/2023" {{ $daftar_Eskul->tahun_ajaran == '2022/2023' ? 'selected' : '' }}>2022/2023</option>
-                <option value="2023/2024" {{ $daftar_Eskul->tahun_ajaran == '2023/2024' ? 'selected' : '' }}>2023/2024</option>
-                <option value="2024/2025" {{ $daftar_Eskul->tahun_ajaran == '2024/2025' ? 'selected' : '' }}>2024/2025</option>
-            </select>
-        </div>
-        <div>
-            <label for="no_telp" class="block font-medium">Nomor Telepon</label>
-            <input type="text" name="no_telp" id="no_telp" class="w-full border rounded px-3 py-2" value="{{ old('no_telp', $daftar_Eskul->no_telp) }}">
-        </div>
+                        <div class="mb-3">
+                            <label for="kelas" class="form-label">Kelas</label>
+                            <input type="text" name="kelas" id="kelas" class="form-control rounded-pill"
+                                   value="{{ old('kelas', $daftar_Eskul->kelas) }}" required>
+                        </div>
 
-        <div>
-            <label for="alasan" class="block font-medium">Alasan</label>
-            <textarea name="alasan" id="alasan" rows="4" class="w-full border rounded px-3 py-2">{{ old('alasan', $daftar_Eskul->alasan) }}</textarea>
-        </div>
+                        <div class="mb-3">
+                            <label for="eskul_id" class="form-label">Ekstrakurikuler</label>
+                            <select name="eskul_id" id="eskul_id" class="form-control rounded-pill" required>
+                                @foreach($eskul as $e)
+                                    <option value="{{ $e->id }}" {{ $daftar_Eskul->eskul_id == $e->id ? 'selected' : '' }}>
+                                        {{ $e->nama_eskul }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
 
-        <div class="pt-4">
-            <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-            <a href="{{ route('admin.daftar_eskul.index') }}" class="btn btn-secondary">Batal</a>
+                        <div class="mb-3">
+                            <label for="tahun_ajaran" class="form-label">Tahun Ajaran</label>
+                            <select name="tahun_ajaran" id="tahun_ajaran" class="form-control rounded-pill" required>
+                                @foreach(['2020/2021', '2021/2022', '2022/2023', '2023/2024', '2024/2025','2025/2026'] as $tahun)
+                                    <option value="{{ $tahun }}" {{ $daftar_Eskul->tahun_ajaran == $tahun ? 'selected' : '' }}>
+                                        {{ $tahun }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="no_telp" class="form-label">Nomor Telepon</label>
+                            <input type="text" name="no_telp" id="no_telp" class="form-control rounded-pill"
+                                   value="{{ old('no_telp', $daftar_Eskul->no_telp) }}">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="alasan" class="form-label">Alasan</label>
+                            <textarea name="alasan" id="alasan" rows="3" class="form-control rounded-4"
+                                      required>{{ old('alasan', $daftar_Eskul->alasan) }}</textarea>
+                        </div>
+
+                        <div class="d-flex justify-content-between pt-3">
+                            <a href="{{ route('admin.daftar_eskul.index') }}" class="btn btn-secondary rounded-pill px-4">Batal</a>
+                            <button type="submit" class="btn btn-primary rounded-pill px-4">Simpan Perubahan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-    </form>
+    </div>
 </div>
 @endsection

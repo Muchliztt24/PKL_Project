@@ -48,7 +48,7 @@ class DaftarEskulController extends Controller
             $query->where('kelas', $request->kelas);
         }
 
-        $daftar = $query->paginate(10)->appends($request->all());
+        $daftar = $query->Paginate(10)->appends($request->all());
 
         return view('admin.daftar_eskul.index', compact('daftar', 'eskul', 'tahunAjaran', 'kelasList', 'tahunFilter'));
     }

@@ -25,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
             $tahunList = [];
 
             $start = 2020;
-            $end = 2030;
+            $end = 2026;
 
             for ($i = $start; $i < $end; $i++) {
                 $tahunList[] = "$i/" . ($i + 1);
