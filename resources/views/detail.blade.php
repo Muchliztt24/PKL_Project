@@ -55,7 +55,8 @@
                 <p class="text-muted mt-3">Belum ada jadwal tersedia.</p>
             @endif
 
-            <a href="{{ url('/') }}" class="btn btn-outline-warning mt-5">← Kembali ke Beranda</a>
+            <a href="{{ url('/') }}" class="btn btn-outline-warning mt-5 ">← Kembali ke Beranda</a>
+            <a href="{{ route('home') }}#form" class="btn btn-primary mt-5 col-md-6">Daftar Sekarang</a>
         </div>
     </div>
 </div>

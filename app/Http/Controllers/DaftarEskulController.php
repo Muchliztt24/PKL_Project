@@ -14,7 +14,6 @@ class DaftarEskulController extends Controller
      */
     public function index(Request $request)
     {
-        
         if ($request->filled('filter_tahun')) {
             session(['filter_tahun' => $request->filter_tahun]);
         }
@@ -28,12 +27,10 @@ class DaftarEskulController extends Controller
 
         $query = Daftar_Eskul::with(['user', 'eskul']);
 
-        
         if ($tahunFilter) {
             $query->where('tahun_ajaran', $tahunFilter);
         }
 
-        
         if ($request->filled('tahun_ajaran')) {
             $query->where('tahun_ajaran', $request->tahun_ajaran);
         }

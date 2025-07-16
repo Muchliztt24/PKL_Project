@@ -6,6 +6,7 @@ use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\PenerimaanController;
 use App\Http\Controllers\DaftarEskulController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\AdminController;
 use App\Http\Middleware\IsAdminMiddleware;
 use App\Http\Controllers\FormController;
 use Illuminate\Support\Facades\Auth;
